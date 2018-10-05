@@ -2,7 +2,7 @@ import invariant from 'invariant'
 import isValidKey from './isValidKey'
 import callIfExists from './callIfExists'
 
-export default class Cache {
+export default class Store {
   constructor(options = {}) {
     ['beforeSet'].forEach(callback => {
       if (options[callback]) {
@@ -15,13 +15,13 @@ export default class Cache {
 
     this.options = options
 
-    this.store = {}
+    this.data = {}
   }
 
   set(key, value) {
     isValidKey(key)
 
-    this.store[key] =
+    this.data[key] =
       callIfExists(this.options['beforeSet'], {
         currentValue: this.get(key),
         isNew: !this.has(key),
@@ -35,20 +35,20 @@ export default class Cache {
   has(key) {
     isValidKey(key)
 
-    return !!this.store[key]
+    return !!this.data[key]
   }
 
   get(key) {
     isValidKey(key)
 
-    return this.store[key]
+    return this.data[key]
   }
 
   delete(key) {
     isValidKey(key)
 
     if (this.has(key)) {
-      delete this.store[key]
+      delete this.data[key]
       return true
     }
 
@@ -56,26 +56,26 @@ export default class Cache {
   }
 
   get size() {
-    return Object.keys(this.store).length
+    return Object.keys(this.data).length
   }
 
   clear() {
-    this.store = {}
+    this.data = {}
   }
 
   values() {
-    return Object.values(this.store)
+    return Object.values(this.data)
   }
 
   keys() {
-    return Object.keys(this.store)
+    return Object.keys(this.data)
   }
 
   toJSON() {
-    return Object.entries(this.store).reduce(
+    return Object.entries(this.data).reduce(
       (obj, [key, value]) => ({
         ...obj,
-        [key]: value instanceof Cache ? value.toJSON() : value,
+        [key]: value instanceof Store ? value.toJSON() : value,
       }),
       {}
     )
