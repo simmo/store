@@ -1,0 +1,81 @@
+{
+  "name": "@simmo/store",
+  "version": "0.0.1",
+  "description": "JavaScript utility that provides a simple data store.",
+  "main": "index.js",
+  "module": "es/index.js",
+  "repository": "github:simmo/store",
+  "author": "Mike Simmonds (https://simmo.me)",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "store"
+  ],
+  "files": [
+    "index.js",
+    "es/index.js"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "jest": true
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "loose": true,
+          "modules": false
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          "@babel/preset-env"
+        ]
+      }
+    },
+    "plugins": [
+      "dev-expression"
+    ]
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "node ./scripts/build.js",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src",
+    "clean": "git clean -fdX ."
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "babel-core": "^7.0.0-0",
+    "babel-eslint": "^8.2.6",
+    "babel-jest": "^23.4.2",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "eslint": "^5.3.0",
+    "jest": "^23.5.0",
+    "rollup": "^0.64.1",
+    "rollup-plugin-babel": "^4.0.0-beta.8",
+    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-node-resolve": "^3.3.0"
+  },
+  "dependencies": {
+    "invariant": "^2.2.4"
+  }
+}
